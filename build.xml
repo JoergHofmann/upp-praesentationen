@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="personalverwaltung">
+	<property name="quelle" value="berami-personal" />
+
+	<target name="prepare">
+		<delete>
+			<fileset dir="TMP" />
+		</delete>
+	</target>
+
+	<target name="test" depends="prepare"  unless="done">
+		<exec executable="upp" output="TMP/test.md">
+			<arg line="-l html5.lua make-slides.md" />
+		</exec>
+		<exec executable="pandoc" dir="TMP/">
+			<arg line="test.md -t revealjs --slide-level 3 -i -o test.html" />
+		</exec>
+		<move file="TMP/test.html" todir="OUT" />
+		<property name="done" value="done" />
+	</target>
+
+	<target name="slides" depends="prepare"  unless="done">
+		<exec executable="upp" output="TMP/${quelle}.md">
+			<arg line="-l html5.lua ${quelle}-slides.md" />
+
+		</exec>
+		<exec executable="pandoc" dir="TMP/">
+			<arg line="${quelle}.md -t revealjs --slide-level 3 -i -o ${quelle}.html" />
+		</exec>
+		<move file="TMP/${quelle}.html" todir="OUT" />
+		<property name="done" value="done" />
+	</target>
+
+	<target name="handout" depends="prepare" unless="done">
+		<copy file="MakeHandout.tex" tofile="TMP/${quelle}-handout.tex" />
+		<exec executable="pp" output="TMP/${quelle}.md">
+			<arg line="-Dmodus=slides ${quelle}.md" />
+		</exec>
+		<exec executable="pandoc" dir="TMP/">
+			<arg line="${quelle}.md -t beamer --slide-level 3 -i -o ${quelle}.tex" />
+		</exec>
+		<exec executable="lualatex" dir="TMP/">
+			<arg line="${quelle}-handout.tex" />
+		</exec>
+		<exec executable="lualatex" dir="TMP/">
+			<arg line="${quelle}-handout.tex" />
+		</exec>
+		<exec executable="lualatex" dir="TMP/">
+			<arg line="${quelle}-handout.tex" />
+		</exec>
+		<exec executable="pp" output="TMP/${quelle}.md">
+			<arg line="-Dmodus=handout ${quelle}.md" />
+		</exec>
+		<exec executable="pandoc" dir="TMP/">
+			<arg line="${quelle}.md -t context -s -o ${quelle}-con.tex" />
+		</exec>
+		<exec executable="context" dir="TMP/" >
+			<arg line="${quelle}-con.tex" />
+		</exec>
+		<move file="TMP/${quelle}-con.pdf" tofile="OUT/${quelle}.pdf" />
+	        <property name="done" value="done" />
+	</target>
+
+	<target name="notes" depends="prepare" unless="done">
+		<copy file="MakeNotes.tex" tofile="TMP/${quelle}-notes.tex" />
+		<copy file="MakeHandout.tex" tofile="TMP/${quelle}-handout.tex" />
+		<exec executable="pp" output="TMP/${quelle}.md">
+			<arg line="-Dmodus=slides ${quelle}.md" />
+		</exec>
+		<exec executable="pandoc" dir="TMP/">
+			<arg line="${quelle}.md -t beamer --slide-level 3 -i -o ${quelle}.tex" />
+		</exec>
+		<exec executable="lualatex" dir="TMP/">
+			<arg line="${quelle}-handout.tex" />
+		</exec>
+		<exec executable="lualatex" dir="TMP/">
+			<arg line="${quelle}-handout.tex" />
+		</exec>
+		<exec executable="pp" output="TMP/${quelle}.md">
+			<arg line="-Dmodus=notes ${quelle}.md" />
+		</exec>
+		<exec executable="pandoc" dir="TMP/">
+			<arg line="${quelle}.md -t context -s -o ${quelle}-con.tex" />
+		</exec>
+		<exec executable="context" dir="TMP/" >
+			<arg line="${quelle}-con.tex" />
+		</exec>
+		<move file="TMP/${quelle}-con.pdf" tofile="OUT/${quelle}.pdf" />
+	        <property name="done" value="done" />
+	</target>
+</project>
