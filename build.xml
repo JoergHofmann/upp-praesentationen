@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="personalverwaltung">
-	<property name="quelle" value="berami-personal" />
+<project name="upp_praesentation">
 
 	<target name="prepare">
 		<delete>
-			<fileset dir="TMP" />
+			<fileset dir="0_TMP" />
+		</delete>
+		<delete>
+			<fileset dir="0_OUT" />
 		</delete>
 	</target>
 
-	<target name="test" depends="prepare"  unless="done">
-		<exec executable="upp" output="TMP/test.md">
+	<target name="revealjs" depends="prepare"  unless="done">
+		<exec executable="upp" output="0_TMP/test.md">
 			<arg line="-l html5.lua make-slides.md" />
 		</exec>
-		<exec executable="pandoc" dir="TMP/">
+		<exec executable="pandoc" dir="0_TMP/">
 			<arg line="test.md -t revealjs --slide-level 3 -i -o test.html" />
 		</exec>
-		<move file="TMP/test.html" todir="OUT" />
+		<move file="0_TMP/test.html" todir="0_OUT" />
 		<property name="done" value="done" />
 	</target>
 
-	<target name="slides" depends="prepare"  unless="done">
+	<target name="beamer" depends="prepare"  unless="done">
 		<exec executable="upp" output="TMP/${quelle}.md">
 			<arg line="-l html5.lua ${quelle}-slides.md" />
 
 		</exec>
 		<exec executable="pandoc" dir="TMP/">
-			<arg line="${quelle}.md -t revealjs --slide-level 3 -i -o ${quelle}.html" />
+			<arg line="${quelle}.md -t beamer --slide-level 3 -i -o ${quelle}.html" />
 		</exec>
 		<move file="TMP/${quelle}.html" todir="OUT" />
 		<property name="done" value="done" />
