@@ -4,8 +4,9 @@
 
 	<target name="prepare">
 		<property environment="env" />
-		<delete>
+		<delete includeemptydirs="true">
 			<fileset dir="0_TMP" />
+			<fileset dir="${env.local_www}/${ant.project.name}" />
 		</delete>
 		<delete>
 			<fileset dir="0_OUT" />
@@ -19,7 +20,13 @@
 		<exec executable="pandoc" dir="0_TMP/">
 			<arg line="test.md -t revealjs --slide-level 3 -s -i -V revealjs-url='.' -o index.html" />
 		</exec>
-		<move file="0_TMP/index.html" todir="${env.local_www}/${ant.project.name}" />
+		<copy todir="${env.local_www}/${ant.project.name}/dist">
+			<fileset dir="${env.HOME}/jho-lib/reveal.js/dist" />
+		</copy>
+		<copy todir="${env.local_www}/${ant.project.name}/plugin">
+			<fileset dir="${env.HOME}/jho-lib/reveal.js/plugin" />
+		</copy>
+		<copy file="0_TMP/index.html" todir="${env.local_www}/${ant.project.name}" />
 		<property name="done" value="done" />
 	</target>
 
