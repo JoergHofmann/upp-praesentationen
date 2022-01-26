@@ -1,9 +1,9 @@
-:(import "jhomarkup.lua")
-:( modus = "slides" )
+:(require "jhomarkup")
+:(require "jhopraesentation")
+:(modus = "slides" )
 :(jahr = "2022")
 
-# make-slides
-Modus: $(modus)
+
 
 $(include "test-slides.md")
 

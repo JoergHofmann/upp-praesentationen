@@ -1,16 +1,10 @@
-# test-slides
-
-Modus: $(modus)
-
-
 # Betriebswirtschaftliche Grundlagen
 
 ## Wirtschaft, Volkswirtschaftlehre, Betriebswirtschaftlehre
 
 ### Was bedeutet "Wirtschaft"
 
-$(Slide( [[. . .
-
+$(Slide( [[
 * alle Einrichtungen und Handlungen, die der planvollen Befriedigung der Bedürfnisse dienen
 * Bedürfnisse gelten als unbegrenzt
 * die Mittel zur Bedürfnisbefriedigung sind dagegen begrenzt

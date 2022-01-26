@@ -4,7 +4,6 @@
 
 	<target name="prepare">
 		<property environment="env" />
-		<echo message="${env.local_www}/${ant.project.name}" />
 		<delete>
 			<fileset dir="0_TMP" />
 		</delete>
@@ -18,7 +17,7 @@
 			<arg line="-l html5.lua make-slides.md" />
 		</exec>
 		<exec executable="pandoc" dir="0_TMP/">
-			<arg line="test.md -t revealjs --slide-level 3 -i -o index.html" />
+			<arg line="test.md -t revealjs --slide-level 3 -s -i -V revealjs-url='.' -o index.html" />
 		</exec>
 		<move file="0_TMP/index.html" todir="${env.local_www}/${ant.project.name}" />
 		<property name="done" value="done" />
