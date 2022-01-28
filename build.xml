@@ -27,6 +27,9 @@
 			<fileset dir="${env.HOME}/jho-lib/reveal.js/plugin" />
 		</copy>
 		<copy file="0_TMP/index.html" todir="${env.local_www}/${ant.project.name}" />
+		<exec executable="decktape">
+			<arg line="reveal -s 1680x1050 --screenshots --screenshots-directory=./ http://192.168.1.3/${ant.project.name} 0_OUT/${ant.project.name}.pdf" />
+		</exec>
 		<property name="done" value="done" />
 	</target>
 
