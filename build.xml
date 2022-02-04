@@ -104,8 +104,6 @@
 	</target>
 	<target name="LuaLib">
 		<echo message="Jetzt geht's los." />
-		<copy todir="../../../.local/lib/upp">
-			<fileset dir="." includes="*.lua" />
-		</copy>
+		<copy file="${ant.project.name}.lua" todir="../../../.local/lib/upp" />
 	</target>
 </project>

@@ -3,7 +3,7 @@
 -- Globale Variablen
 
 modus = ""
-projectname = "upp_praesentation"
+projectname = ""
 ratio = "1680x1050"
 
 slideno = 1 
