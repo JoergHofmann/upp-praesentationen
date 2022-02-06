@@ -35,9 +35,9 @@
 		<copy file="0_TMP/index.html" todir="${env.local_www_dir}/${ant.project.name}" />
 	</target>
 
-	<target name="beamer" depends="prepare"  unless="done">
+	<target name="beamerSlides" depends="prepare"  unless="done">
 		<exec executable="upp" output="0_TMP/${quelle}.md">
-			<arg line="-l html5.lua ${quelle}-slides.md" />
+			<arg line="${quelle}-slides.md" />
 
 		</exec>
 		<exec executable="pandoc" dir="TMP/">
