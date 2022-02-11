@@ -19,7 +19,7 @@ function Slide (content)
 	if (modus == "slides") then
 		return content
 	else
-		local s = "\\externalfigure[handout" .. "_" .. slideno+1 .. "_" .. ratio .. ".png][frame=on, width=0.8\\textwidth]"
+		local s = "\\externalfigure[" .. projectname .. "-handout" .. "_" .. slideno+1 .. "_" .. ratio .. ".png][frame=on, width=0.8\\textwidth]"
 		slideno = slideno + 1
 		return s
 	end
@@ -41,17 +41,21 @@ end
 
 function Note (content)
 
-	local s = [[<aside class="notes">]]
-
-	if (modus == "slides") then
-		s = s .. content .. "</aside>"
-		return s
+	if (zielformat = "html5") then
+		local s1 = [[<aside class="notes">]]
+		local s2 = "</aside>"
 	else
-		return ""
+		local s1 = "\\note{"
+		local s2 = "}"
 	end
 
-	if (modus == "notes") then
+	if (modus == "slides") then
+		s = s1 .. content .. s2
+		return s
+	elseif (modus = "notes") then
 		return content
+	else
+		return ""
 	end
 end
 
