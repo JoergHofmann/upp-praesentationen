@@ -1,17 +1,16 @@
 -- Befehle um Präsentationen zu erstellen
 --
--- Globale Variablen
+-- Globale Variablen {**
 
-modus = ""
-projectname = ""
+projectname = "jhopraesentation"
 ratio = "1680x1050"
 
 slideno = 1 
 
+-- **}
 
 
-
--- Funktionen
+-- Funktionen {**
 -- 
 
 function Slide (content)
@@ -19,7 +18,7 @@ function Slide (content)
 	if (modus == "slides") then
 		return content
 	else
-		local s = "\\externalfigure[" .. projectname .. "-handout" .. "_" .. slideno+1 .. "_" .. ratio .. ".png][frame=on, width=0.8\\textwidth]"
+		local s = "\\externalfigure[" .. projectname .. "-handout" .. "-slides_" .. slideno+1 .. "_" .. ratio .. ".png][frame=on, width=0.8\\textwidth]"
 		slideno = slideno + 1
 		return s
 	end
@@ -41,18 +40,21 @@ end
 
 function Note (content)
 
-	if (zielformat = "html5") then
-		local s1 = [[<aside class="notes">]]
-		local s2 = "</aside>"
+	local s1 = ""
+	local s2 = ""
+
+	if (zielformat == "html5") then
+		s1 = [[<aside class="notes">]]
+		s2 = "</aside>"
 	else
-		local s1 = "\\note{"
-		local s2 = "}"
+		s1 = "\\note{"
+		s2 = "}"
 	end
 
 	if (modus == "slides") then
 		s = s1 .. content .. s2
 		return s
-	elseif (modus = "notes") then
+	elseif (modus == "notes") then
 		return content
 	else
 		return ""
