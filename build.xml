@@ -86,14 +86,15 @@
 		<move file="TMP/${quelle}-con.pdf" tofile="OUT/${quelle}.pdf" />
 	        <property name="done" value="done" />
 	</target>
-	<target name="LuaLib">
+	<target name="LuaLib" unless="done">
 		<echo message="Jetzt geht's los." />
 		<copy file="${ant.project.name}.lua" todir="../../../.local/lib/upp" />
+	        <property name="done" value="done" />
 	</target>
 
 	<target name="beamerSlides" depends="prepare"  unless="done">
 		<exec executable="upp" output="0_TMP/${ant.project.name}-beamer.md">
-			<arg line="-l latex.lua make-slides.md" />
+			<arg line="-l latex.lua -l ModeSlides.lua ${ant.project.name}.md" />
 		</exec>
 		<exec executable="pandoc" dir="0_TMP/">
 			<arg line="${ant.project.name}-beamer.md -t beamer --slide-level 3 -i -s -o ${ant.project.name}-beamer.tex" />
