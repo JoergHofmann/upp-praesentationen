@@ -2,7 +2,6 @@
 --
 -- Globale Variablen {**
 
-projectname = "jhopraesentation"
 ratio = "1680x1050"
 
 slideno = 1 
@@ -18,7 +17,7 @@ function Slide (content)
 	if (modus == "slides") then
 		return content
 	else
-		local s = "\\externalfigure[" .. projectname .. "-handout" .. "-slides_" .. slideno+1 .. "_" .. ratio .. ".png][frame=on, width=0.8\\textwidth]"
+		local s = "\\externalfigure[" .. ProjectId .. "-handout" .. "-slides_" .. slideno+1 .. "_" .. ratio .. ".png][frame=on, width=0.8\\textwidth]"
 		slideno = slideno + 1
 		return s
 	end

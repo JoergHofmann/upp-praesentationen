@@ -5,9 +5,9 @@
 	<target name="prepare">
 		<property environment="env" />
 		<delete includeemptydirs="true">
-			<fileset dir="0_TMP" />
-			<fileset dir="0_OUT" />
-			<fileset dir="${env.local_www_dir}/${ant.project.name}" />
+			<fileset dir="0_TMP" includes="*"/>
+			<fileset dir="0_OUT" includes="*" />
+			<fileset dir="${env.local_www_dir}/${ant.project.name}" includes="*" />
 		</delete>
 	</target>
 
@@ -16,7 +16,7 @@
 			<arg line="-l html5.lua -l ModeSlides.lua ${ant.project.name}.md" />
 		</exec>
 		<exec executable="pandoc" dir="0_TMP/">
-			<arg line="${ant.project.name}.md -t revealjs --slide-level 3 -s -i -V revealjs-url='.' -o ${ant.project.name}.html" />
+			<arg line="${ant.project.name}.md -t revealjs --slide-level 2 -s -i -V revealjs-url='.' -o ${ant.project.name}.html" />
 		</exec>
 		<copy todir="${env.local_www_dir}/${ant.project.name}/dist">
 			<fileset dir="${env.HOME}/jho-lib/reveal.js/dist" />
@@ -33,15 +33,17 @@
 	</target>
 
 	<target name="revealHandout" depends="prepare" unless="done">
-		<antcall target="reveal" />
+	    <antcall target="reveal" />
 		<exec executable="sed" dir="0_TMP/">
 			<arg line="-i '/^# /d' ${ant.project.name}.md" />
 		</exec>
+		<!-- 
 		<exec executable="sed" dir="0_TMP/">
 			<arg line="-i '/^## /d' ${ant.project.name}.md" />
 		</exec>
+	    -->
 		<exec executable="pandoc" dir="0_TMP/">
-			<arg line="${ant.project.name}.md -t revealjs --slide-level 3 -s -i -V revealjs-url='.' -o ${ant.project.name}-handout.html" />
+			<arg line="${ant.project.name}.md -t revealjs --slide-level 2 -s -i -V revealjs-url='.' -o ${ant.project.name}-handout.html" />
 		</exec>
 		<copy file="0_TMP/${ant.project.name}-handout.html" todir="${env.local_www_dir}/${ant.project.name}" />
 		<exec executable="decktape">
